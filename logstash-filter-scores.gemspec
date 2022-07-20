@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name = 'logstash-filter-scores'
-  s.version = '1.0.0'
+  s.version = '1.1.0'
   s.licenses = ['GNU AFFERO GENERAL PUBLIC LICENSE']
-  s.summary = "plugin to manager scores data pipeline"
+  s.summary = "plugin to manage scores data pipeline"
   s.description = "This gem is a Logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/logstash-plugin install gemname. This gem is not a stand-alone program"
   s.authors = ["redBorder"]
   s.email = 'systems@redborder.com'
