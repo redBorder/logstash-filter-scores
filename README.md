@@ -2,7 +2,7 @@
 
 This is a plugin for [Logstash](https://github.com/elastic/logstash).
 
-This filter is part of the redBorder malware pipeline process, updates a key in aersopike evertime we recieve a message.
+This filter is use as part of an internal event process for redBorder platform..
 
 ## Documentation
 
