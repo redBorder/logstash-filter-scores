@@ -1,0 +1,43 @@
+# encoding: utf-8
+require "logstash/filters/base"
+require "logstash/namespace"
+
+require_relative "util/scores_constant"
+require_relative "util/aerospike_config"
+require_relative "store/aerospike_store"
+
+class LogStash::Filters::Scores < LogStash::Filters::Base
+  include ScoresConstant
+  include Aerospike
+
+  config_name "scores"
+
+  config :aerospike_server,          :validate => :string,  :default => "",                             :required => false
+  config :aerospike_namespace,       :validate => :string,  :default => "malware",                      :required => false
+  config :reputation_servers,        :validate => :array,   :default => ["127.0.0.1:7777"],             :require => false
+
+  # DATASOURCE="rb_flow"
+  DELAYED_REALTIME_TIME = 15
+
+  public
+  def register
+    # Add instance variables
+    @aerospike_server = AerospikeConfig::servers if @aerospike_server.empty?
+    @aerospike = Client.new(@aerospike_server.first.split(":").first)
+    @aerospike_store = AerospikeStore.new(@aerospike, @aerospike_namespace,  @reputation_servers)
+  end # def register
+
+  public
+
+  def filter(event)
+    message = {}
+    message = event.to_hash
+
+    hash = message[HASH]
+    timestamp = message[TIMESTAMP]
+
+    @aerospike_store.update_hash_times(timestamp, hash, "hash")
+
+    event.cancel
+  end  # def filter(event)
+end # class LogStash::Filters::Scores

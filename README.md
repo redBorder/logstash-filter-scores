@@ -2,7 +2,7 @@
 
 This is a plugin for [Logstash](https://github.com/elastic/logstash).
 
-This filter normalize the upcoming netflow information into a minute base system.
+This filter is part of the redBorder malware pipeline process, updates a key in aersopike evertime we recieve a message.
 
 ## Documentation
 
