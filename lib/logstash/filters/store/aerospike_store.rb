@@ -32,7 +32,7 @@ class AerospikeStore
       hash_times_key = Key.new(@namespace, type + "Times" , data) rescue nil
       data_times = {}
 
-      record = @aerospike.get(hash_times_key,[],Policy.new)
+      record = @aerospike.get(hash_times_key,[],Policy.new) rescue nil
 
       if record.nil?
         data_times["time_start"] = timestamp
@@ -41,7 +41,7 @@ class AerospikeStore
         data_times["time_end"] = timestamp
       end
 
-      @aerospike.put(hash_times_key, data_times)
+      @aerospike.put(hash_times_key, data_times) rescue nil
     end
   end
 
